@@ -459,3 +459,93 @@ body {
 .title{
   border-radius: 10px;
 }
+
+/* Navbar Base */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background: #222;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.menu-icon {
+  display: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+/* Desktop nav */
+.nav-links {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+.nav-links li a {
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.nav-links li a:hover {
+  color: #00B894;
+}
+
+/* Mobile nav */
+@media (max-width: 768px) {
+  .menu-icon {
+    display: block;
+    font-size: 1.8rem;
+    cursor: pointer;
+    z-index: 1100; /* above content */
+    position: relative;
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 72%; /* hamburger ke neeche */
+    right: -20;  /* aligns to the right edge of hamburger */
+    width: 180px; /* width of dropdown */
+    flex-direction: column;
+    background: #00B894;
+    padding: 8px 0; /* box padding */
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    max-height: 0; 
+    overflow: hidden;
+    transition: max-height 0.3s ease; /* smooth open/close */
+  }
+
+  .nav-links.active {
+    display: flex;
+    max-height: 300px; /* enough space for items (expand smoothly) */
+  }
+
+  .nav-links li {
+    margin: 0;
+    padding: 10px 15px;
+  }
+
+  .nav-links li a {
+    font-size: 1rem;
+    color: #fff;
+    text-decoration: none;
+    display: block;
+  }
+
+  .nav-links li a:hover {
+    color: #222;
+  }
+}
