@@ -15,15 +15,28 @@ const app = express();
 /* =====================
    MIDDLEWARE
 ===================== */
-app.use(cors({
-  origin: "*",
-}));
+app.use(cors({ origin: "*" }));
 app.use(express.json());
 
 /* =====================
-   DB CONNECT
+   DB CONNECT MIDDLEWARE
 ===================== */
-await connectDB();
+// This ensures DB is connected before any request
+let isConnected = false;
+
+app.use(async (req, res, next) => {
+  if (!isConnected) {
+    try {
+      await connectDB();
+      isConnected = true;
+      console.log("MongoDB Connected ✅");
+    } catch (err) {
+      console.error("MongoDB connection failed:", err.message);
+      return res.status(500).json({ error: "Database connection failed" });
+    }
+  }
+  next();
+});
 
 /* =====================
    CLOUDINARY
@@ -45,7 +58,7 @@ const storage = new CloudinaryStorage({
 const upload = multer({ storage });
 
 /* =====================
-   ROUTES
+   ROUTES (UNCHANGED)
 ===================== */
 app.get("/", (req, res) => {
   res.send("API running on Vercel");
@@ -61,11 +74,9 @@ app.post("/api/login", async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
 
-    const token = jwt.sign(
-      { id: user._id },
-      process.env.JWT_SECRET,
-      { expiresIn: "1h" }
-    );
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
 
     res.json({ token });
   } catch (err) {
@@ -123,6 +134,6 @@ app.delete("/api/blogs/:id", async (req, res) => {
 });
 
 /* =====================
-   EXPORT (NO listen)
+   EXPORT
 ===================== */
 export default app;
