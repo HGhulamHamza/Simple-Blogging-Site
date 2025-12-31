@@ -37,7 +37,7 @@ const Dashboard = () => {
 
   const fetchBlogs = async () => {
     try {
-      const res = await axios.get("https://simple-blogging-site-production.up.railway.app/api/blogs");
+      const res = await axios.get("https://simple-blogging-site-jd4e.vercel.app/api/blogs");
       setBlogs(res.data);
     } catch (err) {
       console.error("Error fetching blogs:", err);
@@ -76,7 +76,7 @@ const Dashboard = () => {
       if (formData.imageFile) data.append("image", formData.imageFile);
 
       if (editId) {
-        await axios.put(`https://simple-blogging-site-production.up.railway.app/api/blogs/${editId}`, data, {
+        await axios.put(`https://simple-blogging-site-jd4e.vercel.app/api/blogs/${editId}`, data, {
           headers: { "Content-Type": "multipart/form-data" },
         });
         setSnackbar({
@@ -85,7 +85,7 @@ const Dashboard = () => {
           severity: "success",
         });
       } else {
-        await axios.post("https://simple-blogging-site-production.up.railway.app/api/blogs", data, {
+        await axios.post("https://simple-blogging-site-jd4e.vercel.app/api/blogs", data, {
           headers: { "Content-Type": "multipart/form-data" },
         });
         setSnackbar({
@@ -128,7 +128,7 @@ const Dashboard = () => {
 
   const confirmDeleteBlog = async () => {
     try {
-      await axios.delete(`https://simple-blogging-site-production.up.railway.app/api/blogs/${confirmDelete.id}`);
+      await axios.delete(`https://simple-blogging-site-jd4e.vercel.app/api/blogs/${confirmDelete.id}`);
       fetchBlogs();
       setSnackbar({
         open: true,

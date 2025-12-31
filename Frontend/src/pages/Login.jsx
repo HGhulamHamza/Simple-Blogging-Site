@@ -17,7 +17,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("https://simple-blogging-site-production.up.railway.app/api/login", {
+      const res = await axios.post("https://simple-blogging-site-jd4e.vercel.app/api/login", {
         email,
         password,
       });

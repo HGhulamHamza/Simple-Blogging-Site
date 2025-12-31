@@ -11,7 +11,7 @@ const Blog = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const res = await axios.get("https://simple-blogging-site-production.up.railway.app/api/blogs");
+        const res = await axios.get("https://simple-blogging-site-jd4e.vercel.app/api/blogs");
         setBlogs(res.data);
       } catch (err) {
         console.error("Error fetching blogs:", err);
